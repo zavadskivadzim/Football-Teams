@@ -6,14 +6,14 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "team")
+@Table
 public class Team {
 
     @Id
-    @Column(name = "team_id")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer teamId;
 
-    @Column(name = "team_name")
+    @Column
     private String teamName;
 }
