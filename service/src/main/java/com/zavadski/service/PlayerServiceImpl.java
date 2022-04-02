@@ -1,6 +1,6 @@
 package com.zavadski.service;
 
-import com.zavadski.dao.PlayerDao;
+import com.zavadski.dao.api.PlayerDao;
 import com.zavadski.model.Player;
 import com.zavadski.service.api.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,6 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public List<Player> getAllPlayers() {
-        return playerDao.findAll();
+        return playerDao.getAllPlayer();
     }
 }

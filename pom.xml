@@ -14,23 +14,18 @@
         <java.version>11</java.version>
         <spring-boot.version>2.6.5</spring-boot.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <log4j2.version>2.3.2</log4j2.version>
     </properties>
 
     <modules>
         <module>model</module>
         <module>dao</module>
-        <module>rest-app</module>
         <module>service</module>
+        <module>rest-app</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-
-            <dependency>
-                <groupId>com.zavadski</groupId>
-                <artifactId>service</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.zavadski</groupId>
                 <artifactId>model</artifactId>
@@ -39,6 +34,11 @@
             <dependency>
                 <groupId>com.zavadski</groupId>
                 <artifactId>dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zavadski</groupId>
+                <artifactId>service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -60,12 +60,6 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-devtools</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
 
@@ -128,6 +122,17 @@
                 <scope>test</scope>
             </dependency>
 
+            <!--            logging-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
