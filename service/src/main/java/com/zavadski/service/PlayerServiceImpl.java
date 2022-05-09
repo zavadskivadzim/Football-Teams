@@ -2,6 +2,7 @@ package com.zavadski.service;
 
 import com.zavadski.dao.api.PlayerDao;
 import com.zavadski.model.Player;
+import com.zavadski.model.Team;
 import com.zavadski.service.api.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,25 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public List<Player> getAllPlayers() {
-        return playerDao.getAllPlayer();
+        return playerDao.findAll();
+    }
+
+    @Override
+    public Player findPlayerById(Integer id) {
+        return playerDao.findById(id);
+    }
+
+    @Override
+    public Integer createPlayer(Player player) {
+        return playerDao.save(player);
+    }
+    @Override
+    public Integer updatePlayer(Player player) {
+        return playerDao.update(player);
+    }
+
+    @Override
+    public void deletePlayer(Integer playerId) {
+        playerDao.delete(playerId);
     }
 }

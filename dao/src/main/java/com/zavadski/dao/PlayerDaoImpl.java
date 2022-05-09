@@ -2,16 +2,19 @@ package com.zavadski.dao;
 
 import com.zavadski.dao.api.PlayerDao;
 import com.zavadski.model.Player;
-import org.hibernate.Session;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 
 @Repository
 public class PlayerDaoImpl implements PlayerDao {
+
+    private final Logger logger = LogManager.getLogger(PlayerDaoImpl.class);
 
     private final EntityManager entityManager;
 
@@ -21,13 +24,52 @@ public class PlayerDaoImpl implements PlayerDao {
     }
 
     @Override
-    public List<Player> getAllPlayer() {
+    @Transactional
+    public List<Player> findAll() {
 
-        Session session = entityManager.unwrap(Session.class);
+        logger.debug("find All Players");
 
-        Query query = session.createQuery("from Player", Player.class);
-        List<Player> players = query.getResultList();
+        return entityManager.createQuery("from Player", Player.class).getResultList();
+    }
 
-        return players;
+    @Override
+    @Transactional
+    public Player findById(Integer id) {
+
+        logger.debug("Find Player by id={}", id);
+
+        return entityManager.find(Player.class, id);
+    }
+
+    @Override
+    @Transactional
+    public Integer save(Player player) {
+
+        logger.info("Create Player {}", player);
+
+        entityManager.persist(player);
+
+        return player.getPlayerId();
+    }
+
+    @Override
+    @Transactional
+    public Integer update(Player player) {
+
+        logger.info("update player {}", player);
+
+        entityManager.merge(player);
+
+        return player.getPlayerId();
+    }
+
+    @Override
+    @Transactional
+    public void delete(Integer id) {
+
+        logger.info("delete player by id={}", id);
+
+        Player player = entityManager.find(Player.class, id);
+        entityManager.remove(player);
     }
 }

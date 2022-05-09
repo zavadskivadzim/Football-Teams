@@ -3,8 +3,8 @@ package com.zavadski.rest;
 import com.zavadski.model.Team;
 import com.zavadski.service.api.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -22,6 +22,32 @@ public class TeamController {
     public final Collection<Team> getAllTeams() {
 
         return teamService.getAllTeams();
+    }
+
+    @GetMapping(value = "/teams/{id}")
+    public final Team findTeamById(@PathVariable Integer id) {
+
+        return teamService.findTeamById(id);
+    }
+
+    @PostMapping(value = "/teams")
+    @ResponseStatus(HttpStatus.CREATED)
+    public final Integer createTeam(@RequestBody Team team) {
+
+        return teamService.createTeam(team);
+    }
+
+    @PutMapping(value = "/teams")
+    public final Integer updateTeam(@RequestBody Team team) {
+
+        return teamService.updateTeam(team);
+    }
+
+    @DeleteMapping(value = "/teams/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public final void deleteTeamById(@PathVariable Integer id) {
+
+        teamService.deleteTeam(id);
     }
 
 }

@@ -20,6 +20,25 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<Team> getAllTeams() {
-        return teamDao.getAllTeams();
+        return teamDao.findAll();
+    }
+
+    @Override
+    public Team findTeamById(Integer id) {
+        return teamDao.findById(id);
+    }
+
+    @Override
+    public Integer createTeam(Team team) {
+        return teamDao.save(team);
+    }
+    @Override
+    public Integer updateTeam(Team team) {
+        return teamDao.update(team);
+    }
+
+    @Override
+    public void deleteTeam(Integer teamId) {
+        teamDao.delete(teamId);
     }
 }
