@@ -48,7 +48,6 @@ public class TeamDaoImpl implements TeamDao {
         logger.info("Create team {}", team);
 
         entityManager.persist(team);
-
         return team.getTeamId();
     }
 
@@ -59,7 +58,6 @@ public class TeamDaoImpl implements TeamDao {
         logger.info("update team {}", team);
 
         entityManager.merge(team);
-
         return team.getTeamId();
     }
 

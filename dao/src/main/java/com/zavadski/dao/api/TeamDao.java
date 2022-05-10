@@ -1,6 +1,5 @@
 package com.zavadski.dao.api;
 
-import com.zavadski.model.Player;
 import com.zavadski.model.Team;
 
 import java.util.List;

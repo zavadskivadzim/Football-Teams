@@ -41,15 +41,7 @@
 //        Team testTeam = new Team();
 //        teams.add(testTeam);
 //
-//        when(entityManager.unwrap(any())).thenReturn(any());
-//
-//        when(session.createQuery(anyString())).thenReturn(query);
-//        when(query.getResultList()).thenReturn(teams);
-////
-////        List<Team> userListActual = teamDao.findAll();
-////        assertNotNull(userListActual);
-////
-////        assertNotNull(userListActual);
+//        when(entityManager.createQuery(any(String.class)).getResultList()).thenReturn(teams);
 //
 //    }
 //
