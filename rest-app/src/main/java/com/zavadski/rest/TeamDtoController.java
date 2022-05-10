@@ -23,7 +23,7 @@ public class TeamDtoController {
     @GetMapping(value = "team_with_players")
     public final Collection<TeamWithPlayerDto> TeamWithPlayers() {
 
-        logger.debug("rest-app: TeamWithPlayer()");
+        logger.debug(" find Teams With Players");
 
         return teamWithPlayerDtoService.findAllTeamsWithNumberOfPlayers();
     }

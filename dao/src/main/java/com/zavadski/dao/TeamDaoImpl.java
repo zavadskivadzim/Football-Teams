@@ -24,7 +24,6 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    @Transactional
     public List<Team> findAll() {
 
         logger.debug("find All Teams");
@@ -33,7 +32,6 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    @Transactional
     public Team findById(Integer id) {
 
         logger.debug("Find team by id={}", id);

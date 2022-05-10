@@ -1,13 +1,16 @@
 package com.zavadski.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.zavadski.model.Team;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Data
-public class PlayerFilterDto {
+@AllArgsConstructor
+public class PlayerDto {
 
     private Integer playerId;
 
@@ -19,6 +22,6 @@ public class PlayerFilterDto {
     @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+3")
     private LocalDate birthday;
 
-    private Integer teamId;
+    private Team team;
 
 }

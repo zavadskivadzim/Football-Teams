@@ -6,9 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -24,7 +24,6 @@ public class PlayerDaoImpl implements PlayerDao {
     }
 
     @Override
-    @Transactional
     public List<Player> findAll() {
 
         logger.debug("find All Players");
@@ -33,7 +32,6 @@ public class PlayerDaoImpl implements PlayerDao {
     }
 
     @Override
-    @Transactional
     public Player findById(Integer id) {
 
         logger.debug("Find Player by id={}", id);

@@ -33,6 +33,7 @@ public class PlayerServiceImpl implements PlayerService {
     public Integer createPlayer(Player player) {
         return playerDao.save(player);
     }
+
     @Override
     public Integer updatePlayer(Player player) {
         return playerDao.update(player);
