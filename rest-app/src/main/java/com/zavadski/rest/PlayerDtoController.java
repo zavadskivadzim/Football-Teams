@@ -1,7 +1,7 @@
 package com.zavadski.rest;
 
 import com.zavadski.model.dto.PlayerDto;
-import com.zavadski.service.api.PlayerFilterDtoService;
+import com.zavadski.service.PlayerFilterDtoService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.format.annotation.DateTimeFormat;

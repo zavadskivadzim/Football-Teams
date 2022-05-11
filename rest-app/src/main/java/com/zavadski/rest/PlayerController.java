@@ -1,7 +1,7 @@
 package com.zavadski.rest;
 
 import com.zavadski.model.Player;
-import com.zavadski.service.api.PlayerService;
+import com.zavadski.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
