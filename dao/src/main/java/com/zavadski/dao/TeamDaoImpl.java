@@ -69,4 +69,12 @@ public class TeamDaoImpl implements TeamDao {
         entityManager.remove(team);
     }
 
+    @Override
+    public Long count() {
+
+        logger.info("count teams");
+
+        return (Long) entityManager.createQuery("select count(*) from Team").getResultList().get(0);
+    }
+
 }

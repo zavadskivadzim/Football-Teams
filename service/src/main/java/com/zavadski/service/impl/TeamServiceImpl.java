@@ -42,4 +42,10 @@ public class TeamServiceImpl implements TeamService {
     public void deleteTeam(Integer teamId) {
         teamDao.delete(teamId);
     }
+
+    @Override
+    public Long count() {
+        return teamDao.count();
+    }
+
 }

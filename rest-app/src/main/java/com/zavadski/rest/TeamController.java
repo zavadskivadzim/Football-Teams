@@ -50,4 +50,10 @@ public class TeamController {
         teamService.deleteTeam(id);
     }
 
+    @GetMapping(value = "/teams/count")
+    public final Long count() {
+
+        return teamService.count();
+    }
+
 }

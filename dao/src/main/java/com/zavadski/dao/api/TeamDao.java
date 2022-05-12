@@ -16,4 +16,6 @@ public interface TeamDao {
 
     void delete(Integer teamId);
 
+    Long count();
+
 }

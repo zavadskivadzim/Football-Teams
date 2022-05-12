@@ -16,4 +16,6 @@ public interface TeamService {
 
     void deleteTeam(Integer teamId);
 
+    Long count();
+
 }
