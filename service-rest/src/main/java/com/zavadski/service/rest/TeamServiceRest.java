@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class TeamServiceRest implements TeamService {
@@ -67,13 +68,13 @@ public class TeamServiceRest implements TeamService {
                 restTemplate.exchange(url + "/" + teamId, HttpMethod.DELETE, entity, Integer.class);
     }
 
-//    @Override
-//    public Integer count() {
-//
-//        ResponseEntity<Integer> responseEntity = restTemplate.getForEntity(url + "/count", Integer.class);
-//        return responseEntity.getBody();
-//    }
-//
+    @Override
+    public Long count() {
+
+        ResponseEntity<Integer> responseEntity = restTemplate.getForEntity(url + "/count", Integer.class);
+        return Objects.requireNonNull(responseEntity.getBody()).longValue();
+    }
+
 //    @Override
 //    public boolean isTeamWithPlayers(Integer teamId) {
 //        Boolean result = restTemplate.getForObject(url + "/check/" + teamId, Boolean.class);

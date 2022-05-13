@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Component
@@ -31,7 +32,11 @@ public class TeamDtoDaoImpl implements TeamDtoDao {
 
         logger.debug("Start: findAllWithNumberOfPlayers");
 
-        return entityManager.createQuery(findAllWithNumberOfPlayersSql).getResultList();
+
+        TypedQuery<TeamWithPlayerDto> query = entityManager.createQuery(findAllWithNumberOfPlayersSql, TeamWithPlayerDto.class);
+        List<TeamWithPlayerDto> teams = query.getResultList();
+
+        return teams;
     }
 
 }

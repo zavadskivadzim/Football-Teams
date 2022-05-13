@@ -41,7 +41,7 @@ public class TeamController {
     @GetMapping(value = "/teams")
     public final String teams(Model model) {
         model.addAttribute("teams", teamDtoService.findAllTeamsWithNumberOfPlayers());
-//        model.addAttribute("count", teamService.count());
+        model.addAttribute("count", teamService.count());
         return "teams";
     }
 
