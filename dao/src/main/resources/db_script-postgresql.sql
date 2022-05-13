@@ -26,3 +26,14 @@ insert into PLAYER (first_name, surname, birthday, team_id) values ('Alexandre',
 insert into PLAYER (first_name, surname, birthday, team_id) values ('Bukayo', 'Saka', '2001-09-05', 2);
 
 select * from player
+
+SELECT t.team_id, t.team_name, count(p.team_id)
+FROM Team t
+LEFT JOIN Player p ON t.team_id = p.team_id
+GROUP BY t.team_id
+ORDER BY t.team_name
+	
+SELECT t.team_id, t.team_name, (select count(p.team_id) from Team t2, Player p 
+								where t2.team_id = p.team_id and t.team_id = p.team_id
+								GROUP BY t2.team_id)
+FROM Team t 
