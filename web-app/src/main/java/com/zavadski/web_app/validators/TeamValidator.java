@@ -7,7 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import static com.zavadski.model.constants.TeamConstants.TEAM_NAME_SIZE;
+import static com.zavadski.model.constants.Constants.TEAM_NAME_SIZE;
 
 @Component
 public class TeamValidator implements Validator {

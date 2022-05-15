@@ -1,10 +1,12 @@
 package com.zavadski.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "team")
 public class Team {
@@ -17,4 +19,7 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
+    public Team(Integer teamId) {
+        this.teamId = teamId;
+    }
 }

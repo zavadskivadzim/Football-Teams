@@ -2,14 +2,14 @@ package com.zavadski.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zavadski.model.Team;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class PlayerDto {
 
     private Integer playerId;

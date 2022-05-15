@@ -25,9 +25,9 @@ public class PlayerDtoController {
 
     @GetMapping(value = "player_dtos")
     public final Collection<PlayerDto> filterByBirthday(@RequestParam(value = "startDate", required = false)
-                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-                                                  @RequestParam(value = "endDate", required = false)
-                                                      @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+                                                        @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+                                                        @RequestParam(value = "endDate", required = false)
+                                                        @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
 
         logger.debug("filter Players By Birthday");
 

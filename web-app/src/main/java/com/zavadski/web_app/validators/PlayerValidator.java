@@ -7,7 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import static com.zavadski.model.constants.PlayerConstants.PLAYER_NAME_SIZE;
+import static com.zavadski.model.constants.Constants.PLAYER_NAME_SIZE;
 
 @Component
 public class PlayerValidator implements Validator {

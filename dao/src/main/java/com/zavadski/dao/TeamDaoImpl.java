@@ -1,15 +1,21 @@
 package com.zavadski.dao;
 
 import com.zavadski.dao.api.TeamDao;
+import com.zavadski.dao.exception.FieldNullPointerException;
+import com.zavadski.dao.exception.UnacceptableName;
 import com.zavadski.model.Team;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+
+import static com.zavadski.model.constants.Constants.TEAM_NAME_SIZE;
 
 @Repository
 public class TeamDaoImpl implements TeamDao {
@@ -45,6 +51,16 @@ public class TeamDaoImpl implements TeamDao {
 
         logger.info("Create team {}", team);
 
+        if (team.getTeamName().length() > TEAM_NAME_SIZE) {
+            logger.warn("Team name {} is too long", team.getTeamName());
+            throw new UnacceptableName("Team name length should be <=" + TEAM_NAME_SIZE);
+        }
+
+        if (team.getTeamName().isEmpty()) {
+            logger.error("Not all fields are filled in Team");
+            throw new FieldNullPointerException("Not all fields are filled in Team");
+        }
+
         entityManager.persist(team);
         return team.getTeamId();
     }
@@ -76,5 +92,7 @@ public class TeamDaoImpl implements TeamDao {
 
         return (Long) entityManager.createQuery("select count(*) from Team").getResultList().get(0);
     }
+
+
 
 }
