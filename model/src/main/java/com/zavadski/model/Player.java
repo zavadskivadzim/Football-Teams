@@ -2,6 +2,7 @@ package com.zavadski.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -23,7 +24,8 @@ public class Player {
     private String surname;
 
     @Column
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+3")
     private LocalDate birthday;
 
     @ManyToOne

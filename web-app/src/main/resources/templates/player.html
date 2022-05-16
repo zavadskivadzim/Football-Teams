@@ -108,7 +108,7 @@
                                        for="field_team">Team</label>
                                 <select class="form-control"
                                         id="field_team"
-                                        th:field="*{team}">
+                                        th:field="*{team.teamId}">
                                     <option th:each="team : ${teams}"
                                             th:value="${team.teamId}"
                                             th:text="${team.teamName}">
