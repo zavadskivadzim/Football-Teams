@@ -5,6 +5,8 @@ import com.zavadski.service.PlayerFilterDtoService;
 import com.zavadski.service.PlayerService;
 import com.zavadski.service.TeamService;
 import com.zavadski.web_app.validators.PlayerValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,9 @@ import java.time.LocalDate;
 
 @Controller
 public class PlayerController {
+
+    private static final Logger logger = LoggerFactory.getLogger(PlayerController.class);
+
 
     private final PlayerService playerService;
     private final TeamService teamService;
@@ -54,6 +59,8 @@ public class PlayerController {
      */
     @GetMapping(value = "/player/{id}")
     public final String gotoEditPlayerPage(@PathVariable Integer id, Model model) {
+
+        logger.debug("gotoEditPlayerPage(id:{},model:{})", id, model);
 
         model.addAttribute("isNew", false);
         model.addAttribute("player", playerService.findPlayerById(id));

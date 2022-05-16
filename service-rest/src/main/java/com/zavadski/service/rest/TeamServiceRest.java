@@ -43,8 +43,8 @@ public class TeamServiceRest implements TeamService {
     @Override
     public Integer createTeam(Team team) {
 
-        ResponseEntity responseEntity = restTemplate.postForEntity(url, team, Integer.class);
-        return (Integer) responseEntity.getBody();
+        ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(url, team, Integer.class);
+        return responseEntity.getBody();
     }
 
     @Override

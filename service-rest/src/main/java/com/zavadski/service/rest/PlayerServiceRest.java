@@ -42,9 +42,8 @@ public class PlayerServiceRest implements PlayerService {
     @Override
     public Integer createPlayer(Player player) {
 
-        ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(
-                url, player, Integer.class);
-        return (Integer) responseEntity.getBody();
+        ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(url, player, Integer.class);
+        return responseEntity.getBody();
     }
 
     @Override

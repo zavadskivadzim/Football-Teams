@@ -20,9 +20,7 @@ public class TeamController {
     private static final Logger logger = LoggerFactory.getLogger(TeamController.class);
 
     private final TeamWithPlayerDtoService teamDtoService;
-
     private final TeamService teamService;
-
     private final TeamValidator teamValidator;
 
     public TeamController(TeamWithPlayerDtoService teamDtoService,
@@ -52,7 +50,9 @@ public class TeamController {
      */
     @GetMapping(value = "/team/{id}")
     public final String gotoEditTeamPage(@PathVariable Integer id, Model model) {
+
         logger.debug("gotoEditTeamPage(id:{},model:{})", id, model);
+
         model.addAttribute("isNew", false);
         model.addAttribute("team", teamService.findTeamById(id));
         return "team";
@@ -100,7 +100,7 @@ public class TeamController {
      */
     @PostMapping(value = "/team/{id}")
     public String updateTeam(Team team, BindingResult result, RedirectAttributes redirectAttributes) {
-        logger.debug("updateTeam({}, {})", team);
+        logger.debug("updateTeam({})", team);
         teamValidator.validate(team, result);
 
         if (result.hasErrors()) {
