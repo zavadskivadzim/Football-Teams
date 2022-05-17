@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.function.LongToIntFunction;
 
 import static com.zavadski.model.constants.Constants.TEAM_NAME_SIZE;
 
@@ -102,12 +103,11 @@ public class TeamDaoImpl implements TeamDao {
 
     private Integer getPlayersCountForTeam(Integer id) {
 
-        //todo
-        TypedQuery<Integer> query = entityManager.createQuery("select count(*) from Player where team = :id", Integer.class);
+        TypedQuery<Long> query = entityManager.createQuery("select count(*) from Player where team.id = :id", Long.class);
         query.setParameter("id", id);
         Long result = query.getResultList().get(0);
 
-        return (Integer) Long.result;
+        return result.intValue();
     }
 
 }

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -118,7 +119,7 @@ public class TeamController {
      *
      * @return view name
      */
-    @GetMapping(value = "/team/{id}")
+    @GetMapping(value = "/team/{id}/delete")
     public final String deleteTeamById(
             @PathVariable Integer id,
             Model model,
