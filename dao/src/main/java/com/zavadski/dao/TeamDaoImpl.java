@@ -98,6 +98,7 @@ public class TeamDaoImpl implements TeamDao {
 
     @Override
     public boolean isTeamWithPlayers(Integer teamId) {
+
         return getPlayersCountForTeam(teamId) > 0;
     }
 
