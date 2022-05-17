@@ -56,4 +56,9 @@ public class TeamController {
         return teamService.count();
     }
 
+    @GetMapping("/teams/check/{id}")
+    public boolean isTeamWithPlayers(@PathVariable Integer id) {
+        return teamService.isTeamWithPlayers(id);
+    }
+
 }

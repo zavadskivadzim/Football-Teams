@@ -18,4 +18,6 @@ public interface TeamService {
 
     Long count();
 
+    boolean isTeamWithPlayers(Integer teamId);
+
 }

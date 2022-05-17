@@ -48,4 +48,9 @@ public class TeamServiceImpl implements TeamService {
         return teamDao.count();
     }
 
+    @Override
+    public boolean isTeamWithPlayers(Integer teamId) {
+        return teamDao.isTeamWithPlayers(teamId);
+    }
+
 }

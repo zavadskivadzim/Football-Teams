@@ -75,9 +75,8 @@ public class TeamServiceRest implements TeamService {
         return Objects.requireNonNull(responseEntity.getBody()).longValue();
     }
 
-//    @Override
-//    public boolean isTeamWithPlayers(Integer teamId) {
-//        Boolean result = restTemplate.getForObject(url + "/check/" + teamId, Boolean.class);
-//        return result;
-//    }
+    @Override
+    public boolean isTeamWithPlayers(Integer teamId) {
+        return restTemplate.getForObject(url + "/check/" + teamId, Boolean.class);
+    }
 }

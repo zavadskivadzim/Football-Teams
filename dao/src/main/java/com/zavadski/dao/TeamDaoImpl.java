@@ -4,6 +4,7 @@ import com.zavadski.dao.api.TeamDao;
 import com.zavadski.dao.exception.FieldNullPointerException;
 import com.zavadski.dao.exception.UnacceptableName;
 import com.zavadski.model.Team;
+import com.zavadski.model.dto.PlayerDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static com.zavadski.model.constants.Constants.TEAM_NAME_SIZE;
@@ -93,6 +95,19 @@ public class TeamDaoImpl implements TeamDao {
         return (Long) entityManager.createQuery("select count(*) from Team").getResultList().get(0);
     }
 
+    @Override
+    public boolean isTeamWithPlayers(Integer teamId) {
+        return getPlayersCountForTeam(teamId) > 0;
+    }
 
+    private Integer getPlayersCountForTeam(Integer id) {
+
+        //todo
+        TypedQuery<Integer> query = entityManager.createQuery("select count(*) from Player where team = :id", Integer.class);
+        query.setParameter("id", id);
+        Long result = query.getResultList().get(0);
+
+        return (Integer) Long.result;
+    }
 
 }

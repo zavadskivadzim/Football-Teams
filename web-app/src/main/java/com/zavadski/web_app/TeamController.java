@@ -118,19 +118,20 @@ public class TeamController {
      *
      * @return view name
      */
-    @GetMapping(value = "/teams/{id}")
+    @GetMapping(value = "/team/{id}")
     public final String deleteTeamById(
             @PathVariable Integer id,
             Model model,
             RedirectAttributes redirectAttributes) {
+
         logger.debug("delete({},{})", id, model);
-        //todo
-//        teamService.isTeamWithPlayers(id);
-//        if (teamService.isTeamWithPlayers(id)) {
-//            redirectAttributes.addAttribute("errorMessage",
-//                    "You can't delete this team, because it has players");
-//            return "redirect:/errors";
-//        } else
+
+        teamService.isTeamWithPlayers(id);
+        if (teamService.isTeamWithPlayers(id)) {
+            redirectAttributes.addAttribute("errorMessage",
+                    "You can't delete this team, because it has players");
+            return "redirect:/errors";
+        } else
         {
             teamService.deleteTeam(id);
             return "redirect:/teams";
