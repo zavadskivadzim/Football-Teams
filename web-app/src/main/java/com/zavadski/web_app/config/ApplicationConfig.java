@@ -21,8 +21,10 @@ public class ApplicationConfig {
 
     @Value("${rest.server.protocol}")
     private String protocol;
+
     @Value("${rest.server.host}")
     private String host;
+
     @Value("${rest.server.port}")
     private Integer port;
 

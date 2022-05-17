@@ -6,9 +6,9 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @PropertySource({"classpath:dao.properties"})
-public class FtApplication {
+public class WebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FtApplication.class, args);
+        SpringApplication.run(WebApplication.class, args);
     }
 }
