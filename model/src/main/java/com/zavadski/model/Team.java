@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import static com.zavadski.model.constants.Constants.TEAM_NAME_SIZE;
+
 @Data
 @RequiredArgsConstructor
 @AllArgsConstructor
@@ -19,8 +21,8 @@ public class Team {
     private Integer teamId;
 
     @Column(name = "team_name")
-    @NotBlank
-    @Size(max = 50, message = "Team name length should be less then 50")
+    @NotBlank(message = "Team name can't be empty")
+    @Size(max = TEAM_NAME_SIZE, message = "Team name must be less then {max} characters long")
     private String teamName;
 
     public Team(Integer teamId) {

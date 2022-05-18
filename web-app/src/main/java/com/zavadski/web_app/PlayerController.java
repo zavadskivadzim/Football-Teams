@@ -4,20 +4,18 @@ import com.zavadski.model.Player;
 import com.zavadski.service.PlayerFilterDtoService;
 import com.zavadski.service.PlayerService;
 import com.zavadski.service.TeamService;
-import com.zavadski.web_app.validators.PlayerValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Controller
 public class PlayerController {
@@ -29,15 +27,12 @@ public class PlayerController {
     private final TeamService teamService;
     private final PlayerFilterDtoService playerDtoService;
 
-    private final PlayerValidator playerValidator;
-
     public PlayerController(TeamService teamService,
                             PlayerService playerService,
-                            PlayerFilterDtoService playerDtoService, PlayerValidator playerValidator) {
+                            PlayerFilterDtoService playerDtoService) {
         this.teamService = teamService;
         this.playerService = playerService;
         this.playerDtoService = playerDtoService;
-        this.playerValidator = playerValidator;
     }
 
     /**
@@ -89,14 +84,13 @@ public class PlayerController {
      * @return view name
      */
     @PostMapping(value = "/player")
-    public String addPlayer(Player player, BindingResult result,
+    public String addPlayer(@Valid @ModelAttribute("firstName") Player player,
+                            BindingResult result,
                             RedirectAttributes redirectAttributes) {
-
-        playerValidator.validate(player, result);
 
         if (result.hasErrors()) {
             redirectAttributes.addAttribute("errorMessage",
-                    "Incorrect data entered");
+                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
             return "redirect:/errors";
         } else {
             this.playerService.createPlayer(player);
@@ -111,14 +105,13 @@ public class PlayerController {
      * @return view name
      */
     @PostMapping(value = "/player/{id}")
-    public String updatePlayer(Player player, BindingResult result,
+    public String updatePlayer(@Valid @ModelAttribute("firstName") Player player,
+                               BindingResult result,
                                RedirectAttributes redirectAttributes) {
-
-        playerValidator.validate(player, result);
 
         if (result.hasErrors()) {
             redirectAttributes.addAttribute("errorMessage",
-                    "Incorrect data entered");
+                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
             return "redirect:/errors";
         } else {
             this.playerService.updatePlayer(player);

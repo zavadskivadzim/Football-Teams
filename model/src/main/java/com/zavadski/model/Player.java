@@ -5,7 +5,12 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
+
+import static com.zavadski.model.constants.Constants.PLAYER_NAME_SIZE;
+import static com.zavadski.model.constants.Constants.TEAM_NAME_SIZE;
 
 @Data
 @Entity
@@ -18,9 +23,12 @@ public class Player {
     private Integer playerId;
 
     @Column
+    @NotBlank(message = "Player name can't be empty")
+    @Size(max = PLAYER_NAME_SIZE, message = "Player name must be less then {max} characters long")
     private String firstName;
 
     @Column
+    @NotBlank(message = "Player surname can't be empty")
     private String surname;
 
     @Column

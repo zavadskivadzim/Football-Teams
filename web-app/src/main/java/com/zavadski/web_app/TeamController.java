@@ -3,7 +3,6 @@ package com.zavadski.web_app;
 import com.zavadski.model.Team;
 import com.zavadski.service.TeamService;
 import com.zavadski.service.TeamWithPlayerDtoService;
-import com.zavadski.web_app.validators.TeamValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,14 +24,11 @@ public class TeamController {
 
     private final TeamWithPlayerDtoService teamDtoService;
     private final TeamService teamService;
-    private final TeamValidator teamValidator;
 
     public TeamController(TeamWithPlayerDtoService teamDtoService,
-                          TeamService teamService,
-                          TeamValidator teamValidator) {
+                          TeamService teamService) {
         this.teamDtoService = teamDtoService;
         this.teamService = teamService;
-        this.teamValidator = teamValidator;
     }
 
     /**
@@ -84,7 +80,7 @@ public class TeamController {
      * @return view name
      */
     @PostMapping(value = "/team")
-    public String addTeam( @Valid @ModelAttribute("teamName") Team team,
+    public String addTeam(@Valid @ModelAttribute("teamName") Team team,
                            BindingResult result,
                            RedirectAttributes redirectAttributes) {
 
@@ -92,7 +88,7 @@ public class TeamController {
 
         if (result.hasErrors()) {
             redirectAttributes.addAttribute("errorMessage",
-                    "Incorrect data entered");
+                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
             return "redirect:/errors";
         } else {
             this.teamService.createTeam(team);
@@ -107,15 +103,15 @@ public class TeamController {
      * @return view name
      */
     @PostMapping(value = "/team/{id}")
-    public String updateTeam(Team team, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String updateTeam(@Valid @ModelAttribute("teamName") Team team,
+                          BindingResult result,
+                          RedirectAttributes redirectAttributes) {
 
         logger.debug("updateTeam({})", team);
 
-        teamValidator.validate(team, result);
-
         if (result.hasErrors()) {
             redirectAttributes.addAttribute("errorMessage",
-                    "Incorrect data entered");
+                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
             return "redirect:/errors";
         } else {
             this.teamService.updateTeam(team);
