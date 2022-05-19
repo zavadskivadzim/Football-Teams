@@ -1,12 +1,16 @@
 package com.zavadski.rest;
 
+import com.zavadski.dao.exception.UnacceptableName;
 import com.zavadski.model.Team;
 import com.zavadski.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Objects;
 
 @RestController
 public class TeamController {
@@ -32,15 +36,23 @@ public class TeamController {
 
     @PostMapping(value = "/teams")
     @ResponseStatus(HttpStatus.CREATED)
-    public final Integer createTeam(@RequestBody Team team) {
+    public final Integer createTeam(@RequestBody @Valid Team team, BindingResult result) {
 
-        return teamService.createTeam(team);
+        if (result.hasErrors()) {
+            throw new UnacceptableName(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
+        } else {
+            return teamService.createTeam(team);
+        }
     }
 
     @PutMapping(value = "/teams")
-    public final Integer updateTeam(@RequestBody Team team) {
+    public final Integer updateTeam(@RequestBody @Valid Team team, BindingResult result) {
 
-        return teamService.updateTeam(team);
+        if (result.hasErrors()) {
+            throw new UnacceptableName(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
+        } else {
+            return teamService.updateTeam(team);
+        }
     }
 
     @DeleteMapping(value = "/teams/{id}")

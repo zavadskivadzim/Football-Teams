@@ -1,24 +1,17 @@
 package com.zavadski.dao;
 
 import com.zavadski.dao.api.TeamDao;
-import com.zavadski.dao.exception.FieldNullPointerException;
 import com.zavadski.dao.exception.UnacceptableName;
 import com.zavadski.model.Team;
-import com.zavadski.model.dto.PlayerDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.function.LongToIntFunction;
-
-import static com.zavadski.model.constants.Constants.TEAM_NAME_SIZE;
 
 @Repository
 public class TeamDaoImpl implements TeamDao {
@@ -54,14 +47,11 @@ public class TeamDaoImpl implements TeamDao {
 
         logger.info("Create team {}", team);
 
-        if (team.getTeamName().length() > TEAM_NAME_SIZE) {
-            logger.warn("Team name {} is too long", team.getTeamName());
-            throw new UnacceptableName("Team name length should be <=" + TEAM_NAME_SIZE);
-        }
+        if (!isTeamUnique(team.getTeamName(), 0)) {
 
-        if (team.getTeamName().isEmpty()) {
-            logger.error("Not all fields are filled in Team");
-            throw new FieldNullPointerException("Not all fields are filled in Team");
+            logger.warn("Team with the same name {} already exists.", team.getTeamName());
+
+            throw new UnacceptableName("Team with the same name already exists in DB.");
         }
 
         entityManager.persist(team);
@@ -73,6 +63,13 @@ public class TeamDaoImpl implements TeamDao {
     public Integer update(Team team) {
 
         logger.info("update team {}", team);
+
+        if (!isTeamUnique(team.getTeamName(), 1)) {
+
+            logger.warn("Team with the same name {} already exists.", team.getTeamName());
+
+            throw new UnacceptableName("Team with the same name already exists in DB.");
+        }
 
         entityManager.merge(team);
         return team.getTeamId();
@@ -111,4 +108,15 @@ public class TeamDaoImpl implements TeamDao {
         return result.intValue();
     }
 
+    @Override
+    public boolean isTeamUnique(String teamName, Integer count) {
+
+        logger.debug("Check TeamName: {} on unique", teamName);
+
+        TypedQuery<Long> query = entityManager.createQuery("select count(team_name) from Team where lower(team_name) = lower(:teamName)", Long.class);
+        query.setParameter("teamName", teamName);
+        Long result = query.getResultList().get(0);
+
+        return result <= count;
+    }
 }

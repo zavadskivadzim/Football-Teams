@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 import static com.zavadski.model.constants.Constants.PLAYER_NAME_SIZE;
-import static com.zavadski.model.constants.Constants.TEAM_NAME_SIZE;
 
 @Data
 @Entity
