@@ -81,8 +81,8 @@ public class TeamController {
      */
     @PostMapping(value = "/team")
     public String addTeam(@Valid @ModelAttribute("teamName") Team team,
-                           BindingResult result,
-                           RedirectAttributes redirectAttributes) {
+                          BindingResult result,
+                          RedirectAttributes redirectAttributes) {
 
         logger.debug("addTeam({})", team);
 
@@ -91,8 +91,14 @@ public class TeamController {
                     Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
             return "redirect:/errors";
         } else {
-            this.teamService.createTeam(team);
-            return "redirect:/teams";
+            if (this.teamService.isTeamUnique(team.getTeamName())) {
+                this.teamService.createTeam(team);
+                return "redirect:/teams";
+            } else {
+                redirectAttributes.addAttribute("errorMessage",
+                        "Team with name " + team.getTeamName() + " already exist");
+                return "redirect:/errors";
+            }
         }
     }
 
@@ -104,8 +110,8 @@ public class TeamController {
      */
     @PostMapping(value = "/team/{id}")
     public String updateTeam(@Valid @ModelAttribute("teamName") Team team,
-                          BindingResult result,
-                          RedirectAttributes redirectAttributes) {
+                             BindingResult result,
+                             RedirectAttributes redirectAttributes) {
 
         logger.debug("updateTeam({})", team);
 
@@ -114,8 +120,14 @@ public class TeamController {
                     Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
             return "redirect:/errors";
         } else {
-            this.teamService.updateTeam(team);
-            return "redirect:/teams";
+            if (!this.teamService.isTeamUnique(team.getTeamName())) {
+                redirectAttributes.addAttribute("errorMessage",
+                        "Team with name " + team.getTeamName() + " already exist");
+                return "redirect:/errors";
+            } else {
+                this.teamService.updateTeam(team);
+                return "redirect:/teams";
+            }
         }
     }
 
@@ -137,8 +149,7 @@ public class TeamController {
             redirectAttributes.addAttribute("errorMessage",
                     "You can't delete this team, because it has players");
             return "redirect:/errors";
-        } else
-        {
+        } else {
             teamService.deleteTeam(id);
             return "redirect:/teams";
         }

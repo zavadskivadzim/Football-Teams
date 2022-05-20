@@ -41,7 +41,10 @@ public class TeamController {
         if (result.hasErrors()) {
             throw new UnacceptableName(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
         } else {
-            return teamService.createTeam(team);
+            if (!this.teamService.isTeamUnique(team.getTeamName())) {
+                throw new UnacceptableName("Team with name " + team.getTeamName() + " already exists.");
+            } else
+                return teamService.createTeam(team);
         }
     }
 
@@ -71,6 +74,11 @@ public class TeamController {
     @GetMapping("/teams/check/{id}")
     public boolean isTeamWithPlayers(@PathVariable Integer id) {
         return teamService.isTeamWithPlayers(id);
+    }
+
+    @GetMapping("/teams/unique/{teamName}")
+    public boolean isTeamUnique(@PathVariable String teamName) {
+        return teamService.isTeamUnique(teamName);
     }
 
 }
