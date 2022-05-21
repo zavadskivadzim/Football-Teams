@@ -120,14 +120,8 @@ public class TeamController {
                     Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
             return "redirect:/errors";
         } else {
-            if (!this.teamService.isTeamUnique(team.getTeamName())) {
-                redirectAttributes.addAttribute("errorMessage",
-                        "Team with name " + team.getTeamName() + " already exist");
-                return "redirect:/errors";
-            } else {
-                this.teamService.updateTeam(team);
-                return "redirect:/teams";
-            }
+            this.teamService.updateTeam(team);
+            return "redirect:/teams";
         }
     }
 

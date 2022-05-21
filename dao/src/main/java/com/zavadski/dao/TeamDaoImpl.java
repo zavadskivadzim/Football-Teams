@@ -1,7 +1,6 @@
 package com.zavadski.dao;
 
 import com.zavadski.dao.api.TeamDao;
-import com.zavadski.dao.exception.UnacceptableName;
 import com.zavadski.model.Team;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,14 +46,6 @@ public class TeamDaoImpl implements TeamDao {
 
         logger.info("Create team {}", team);
 
-        //fixme
-//        if (!isTeamUnique(team.getTeamName(), 0)) {
-//
-//            logger.warn("Team with the same name {} already exists.", team.getTeamName());
-//
-//            throw new UnacceptableName("Team with the same name already exists in DB.");
-//        }
-
         entityManager.persist(team);
         return team.getTeamId();
     }
@@ -64,13 +55,6 @@ public class TeamDaoImpl implements TeamDao {
     public Integer update(Team team) {
 
         logger.info("update team {}", team);
-
-        if (!isTeamUnique(team.getTeamName(), 1)) {
-
-            logger.warn("Team with the same name {} already exists.", team.getTeamName());
-
-            throw new UnacceptableName("Team with the same name already exists in DB.");
-        }
 
         entityManager.merge(team);
         return team.getTeamId();
@@ -110,7 +94,7 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    public boolean isTeamUnique(String teamName, Integer count) {
+    public boolean isTeamUnique(String teamName) {
 
         logger.debug("Check TeamName: {} on unique", teamName);
 
@@ -118,6 +102,7 @@ public class TeamDaoImpl implements TeamDao {
         query.setParameter("teamName", teamName);
         Long result = query.getResultList().get(0);
 
-        return result <= count;
+        return result == 0;
     }
+
 }

@@ -55,7 +55,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public boolean isTeamUnique(String teamName) {
-        return teamDao.isTeamUnique(teamName, 0);
+        return teamDao.isTeamUnique(teamName);
     }
 
 }

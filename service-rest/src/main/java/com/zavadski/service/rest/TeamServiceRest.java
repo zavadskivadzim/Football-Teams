@@ -84,4 +84,5 @@ public class TeamServiceRest implements TeamService {
     public boolean isTeamUnique(String teamName) {
         return restTemplate.getForObject(url + "/unique/" + teamName, Boolean.class);
     }
+
 }
