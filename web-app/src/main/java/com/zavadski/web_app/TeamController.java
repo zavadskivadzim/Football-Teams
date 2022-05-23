@@ -120,8 +120,18 @@ public class TeamController {
                     Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
             return "redirect:/errors";
         } else {
-            this.teamService.updateTeam(team);
-            return "redirect:/teams";
+            Team newTeam = new Team();
+            newTeam.setTeamName(team.getTeamName());
+
+            if (this.teamService.isTeamUnique(newTeam.getTeamName())
+                    || (Objects.equals(this.teamService.findTeamById(team.getTeamId()).getTeamName(), newTeam.getTeamName()))) {
+                this.teamService.updateTeam(team);
+                return "redirect:/teams";
+            } else {
+                redirectAttributes.addAttribute("errorMessage",
+                        "Team with name " + team.getTeamName() + " already exist");
+                return "redirect:/errors";
+            }
         }
     }
 

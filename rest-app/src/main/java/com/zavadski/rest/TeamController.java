@@ -54,7 +54,15 @@ public class TeamController {
         if (result.hasErrors()) {
             throw new UnacceptableName(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
         } else {
-            return teamService.updateTeam(team);
+            Team newTeam = new Team();
+            newTeam.setTeamName(team.getTeamName());
+            System.out.println();
+            if (this.teamService.isTeamUnique(newTeam.getTeamName())
+                    || (Objects.equals(this.teamService.findTeamById(team.getTeamId()).getTeamName(), newTeam.getTeamName()))) {
+                return teamService.updateTeam(team);
+            } else {
+                throw new UnacceptableName("Team with name " + team.getTeamName() + " already exists.");
+            }
         }
     }
 
