@@ -56,7 +56,6 @@ public class TeamController {
         } else {
             Team newTeam = new Team();
             newTeam.setTeamName(team.getTeamName());
-            System.out.println();
             if (this.teamService.isTeamUnique(newTeam.getTeamName())
                     || (Objects.equals(this.teamService.findTeamById(team.getTeamId()).getTeamName(), newTeam.getTeamName()))) {
                 return teamService.updateTeam(team);

@@ -1,10 +1,7 @@
 package com.zavadski.dao.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -13,8 +10,8 @@ import javax.sql.DataSource;
 import java.util.Objects;
 
 @Configuration
-@PropertySource({"classpath:application.properties"})
-public class SpringJdbcConfig {
+@PropertySource({"congig.properties", "sql_query.properties"})
+public class SpringConfig {
 
     @Value("${spring.profiles.active}")
     private String activeProfile;
