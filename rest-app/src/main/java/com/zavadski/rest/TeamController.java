@@ -36,11 +36,10 @@ public class TeamController {
     }
 
     @PostMapping(value = "/teams")
-    @ResponseStatus(HttpStatus.CREATED)
     public final ResponseEntity<Integer> createTeam(@RequestBody Team team) {
 
         Integer id = teamService.createTeam(team);
-        return new ResponseEntity<>(id, HttpStatus.OK);
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
 
     }
 
