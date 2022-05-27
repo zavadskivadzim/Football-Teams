@@ -48,13 +48,10 @@ public class TeamDaoImpl implements TeamDao {
 
         logger.info("Create team {}", team);
 
-        //fixme
-//        if (!isTeamUnique(team.getTeamName())) {
-//
-//            logger.warn("Team with the same name {} already exists.", team.getTeamName());
-//
-//            throw new UnacceptableName("Team with the same name already exists in DB.");
-//        }
+        if (!isTeamUnique(team.getTeamName())) {
+            logger.warn("Team with the same name {} already exists.", team.getTeamName());
+            throw new UnacceptableName("Team with the same name already exists in DB.");
+        }
 
         entityManager.persist(team);
         return team.getTeamId();

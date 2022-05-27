@@ -81,22 +81,23 @@ public class TeamController {
      */
     @PostMapping(value = "/team")
     public String addTeam(@Valid Team team,
-                          BindingResult result) {
+                          BindingResult result,
+                          RedirectAttributes redirectAttributes) {
 
         logger.debug("addTeam({})", team);
 
         if (result.hasErrors()) {
-            return "team";}
-//        } else {
-//            if (this.teamService.isTeamUnique(team.getTeamName())) {
+            return "team";
+        } else {
+            if (this.teamService.isTeamUnique(team.getTeamName())) {
                 this.teamService.createTeam(team);
                 return "teams";
-//            } else {
-//                redirectAttributes.addAttribute("errorMessage",
-//                        "Team with name " + team.getTeamName() + " already exist");
-//                return "redirect:/errors";
-//            }
-//        }
+            } else {
+                redirectAttributes.addAttribute("errorMessage",
+                        "Team with name " + team.getTeamName() + " already exist");
+                return "redirect:/errors";
+            }
+        }
     }
 
     /**
