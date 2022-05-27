@@ -80,26 +80,23 @@ public class TeamController {
      * @return view name
      */
     @PostMapping(value = "/team")
-    public String addTeam(@Valid @ModelAttribute("teamName") Team team,
-                          BindingResult result,
-                          RedirectAttributes redirectAttributes) {
+    public String addTeam(@Valid Team team,
+                          BindingResult result) {
 
         logger.debug("addTeam({})", team);
 
         if (result.hasErrors()) {
-            redirectAttributes.addAttribute("errorMessage",
-                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
-            return "redirect:/errors";
-        } else {
-            if (this.teamService.isTeamUnique(team.getTeamName())) {
+            return "team";}
+//        } else {
+//            if (this.teamService.isTeamUnique(team.getTeamName())) {
                 this.teamService.createTeam(team);
-                return "redirect:/teams";
-            } else {
-                redirectAttributes.addAttribute("errorMessage",
-                        "Team with name " + team.getTeamName() + " already exist");
-                return "redirect:/errors";
-            }
-        }
+                return "teams";
+//            } else {
+//                redirectAttributes.addAttribute("errorMessage",
+//                        "Team with name " + team.getTeamName() + " already exist");
+//                return "redirect:/errors";
+//            }
+//        }
     }
 
     /**

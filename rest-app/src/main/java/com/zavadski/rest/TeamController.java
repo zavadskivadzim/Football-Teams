@@ -5,6 +5,7 @@ import com.zavadski.model.Team;
 import com.zavadski.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,16 +37,11 @@ public class TeamController {
 
     @PostMapping(value = "/teams")
     @ResponseStatus(HttpStatus.CREATED)
-    public final Integer createTeam(@RequestBody @Valid Team team, BindingResult result) {
+    public final ResponseEntity<Integer> createTeam(@RequestBody Team team) {
 
-        if (result.hasErrors()) {
-            throw new UnacceptableName(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
-        } else {
-            if (!this.teamService.isTeamUnique(team.getTeamName())) {
-                throw new UnacceptableName("Team with name " + team.getTeamName() + " already exists.");
-            } else
-                return teamService.createTeam(team);
-        }
+        Integer id = teamService.createTeam(team);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+
     }
 
     @PutMapping(value = "/teams")
