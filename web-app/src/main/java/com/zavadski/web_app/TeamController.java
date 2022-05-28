@@ -89,9 +89,9 @@ public class TeamController {
         if (result.hasErrors()) {
             return "team";
         } else {
-            if (this.teamService.isTeamUnique(team.getTeamName())) {
-                this.teamService.createTeam(team);
-                return "teams";
+            if (teamService.isTeamUnique(team.getTeamName())) {
+                teamService.createTeam(team);
+                return "redirect:/teams";
             } else {
                 redirectAttributes.addAttribute("errorMessage",
                         "Team with name " + team.getTeamName() + " already exist");
@@ -114,13 +114,10 @@ public class TeamController {
         logger.debug("updateTeam({})", team);
 
         if (result.hasErrors()) {
-            redirectAttributes.addAttribute("errorMessage",
-                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
-            return "redirect:/errors";
+            return "team";
         } else {
             Team newTeam = new Team();
             newTeam.setTeamName(team.getTeamName());
-
             if (this.teamService.isTeamUnique(newTeam.getTeamName())
                     || (Objects.equals(this.teamService.findTeamById(team.getTeamId()).getTeamName(), newTeam.getTeamName()))) {
                 this.teamService.updateTeam(team);

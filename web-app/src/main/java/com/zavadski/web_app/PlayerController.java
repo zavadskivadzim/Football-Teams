@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Controller
 public class PlayerController {
@@ -84,14 +83,11 @@ public class PlayerController {
      * @return view name
      */
     @PostMapping(value = "/player")
-    public String addPlayer(@Valid @ModelAttribute("firstName") Player player,
-                            BindingResult result,
-                            RedirectAttributes redirectAttributes) {
+    public String addPlayer(@Valid Player player,
+                            BindingResult result) {
 
         if (result.hasErrors()) {
-            redirectAttributes.addAttribute("errorMessage",
-                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
-            return "redirect:/errors";
+            return "player";
         } else {
             this.playerService.createPlayer(player);
             return "redirect:/players";
@@ -105,14 +101,11 @@ public class PlayerController {
      * @return view name
      */
     @PostMapping(value = "/player/{id}")
-    public String updatePlayer(@Valid @ModelAttribute("firstName") Player player,
-                               BindingResult result,
-                               RedirectAttributes redirectAttributes) {
+    public String updatePlayer(@Valid Player player,
+                               BindingResult result) {
 
         if (result.hasErrors()) {
-            redirectAttributes.addAttribute("errorMessage",
-                    Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
-            return "redirect:/errors";
+            return "player";
         } else {
             this.playerService.updatePlayer(player);
             return "redirect:/players";

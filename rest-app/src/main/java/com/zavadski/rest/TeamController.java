@@ -1,17 +1,13 @@
 package com.zavadski.rest;
 
-import com.zavadski.dao.exception.UnacceptableName;
 import com.zavadski.model.Team;
 import com.zavadski.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Collection;
-import java.util.Objects;
 
 @RestController
 public class TeamController {
@@ -44,24 +40,13 @@ public class TeamController {
     }
 
     @PutMapping(value = "/teams")
-    public final Integer updateTeam(@RequestBody @Valid Team team, BindingResult result) {
+    public final ResponseEntity<Integer> updateTeam(@RequestBody Team team) {
 
-        if (result.hasErrors()) {
-            throw new UnacceptableName(Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
-        } else {
-            Team newTeam = new Team();
-            newTeam.setTeamName(team.getTeamName());
-            if (this.teamService.isTeamUnique(newTeam.getTeamName())
-                    || (Objects.equals(this.teamService.findTeamById(team.getTeamId()).getTeamName(), newTeam.getTeamName()))) {
-                return teamService.updateTeam(team);
-            } else {
-                throw new UnacceptableName("Team with name " + team.getTeamName() + " already exists.");
-            }
-        }
+        Integer id = teamService.updateTeam(team);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/teams/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public final void deleteTeamById(@PathVariable Integer id) {
 
         teamService.deleteTeam(id);
@@ -74,12 +59,12 @@ public class TeamController {
     }
 
     @GetMapping("/teams/check/{id}")
-    public boolean isTeamWithPlayers(@PathVariable Integer id) {
+    public boolean checkTeamWithPlayers(@PathVariable Integer id) {
         return teamService.isTeamWithPlayers(id);
     }
 
     @GetMapping("/teams/unique/{teamName}")
-    public boolean isTeamUnique(@PathVariable String teamName) {
+    public boolean checkTeamOnUnique(@PathVariable String teamName) {
         return teamService.isTeamUnique(teamName);
     }
 
