@@ -107,7 +107,7 @@ public class TeamController {
      * @return view name
      */
     @PostMapping(value = "/team/{id}")
-    public String updateTeam(@Valid @ModelAttribute("teamName") Team team,
+    public String updateTeam(@Valid @ModelAttribute("team") Team team,
                              BindingResult result,
                              RedirectAttributes redirectAttributes) {
 
