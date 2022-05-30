@@ -99,7 +99,7 @@
                                 <input id="field_birthday" name="field_birthday" type="date"
                                        th:field="*{birthday}">
                                 <th:block th:if="${#fields.hasErrors('birthday')}">
-                                    <div th:errorclass="invalid-input" th:errors="*{birthday}"></div>
+                                    <div class="text-danger" th:errorclass="invalid-input" th:errors="*{birthday}"></div>
                                 </th:block>
                             </div>
 
