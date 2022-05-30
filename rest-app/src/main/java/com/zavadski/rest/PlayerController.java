@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class PlayerController {
@@ -20,19 +20,20 @@ public class PlayerController {
     }
 
     @GetMapping(value = "/players")
-    public final Collection<Player> getAllPlayers() {
+    public final ResponseEntity<List<Player>> getAllPlayers() {
 
-        return playerService.getAllPlayers();
+        List<Player> players = playerService.getAllPlayers();
+        return new ResponseEntity<>(players, HttpStatus.OK);
     }
 
     @GetMapping(value = "/players/{id}")
-    public final Player findPlayerById(@PathVariable Integer id) {
+    public final ResponseEntity<Player> findPlayerById(@PathVariable Integer id) {
 
-        return playerService.findPlayerById(id);
+        Player player = playerService.findPlayerById(id);
+        return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
     @PostMapping(value = "/players")
-    @ResponseStatus(HttpStatus.CREATED)
     public final ResponseEntity<Integer> createPlayer(@RequestBody Player player) {
 
         Integer id = playerService.createPlayer(player);
@@ -47,9 +48,10 @@ public class PlayerController {
     }
 
     @DeleteMapping(value = "/players/{id}")
-    public final void deletePlayerById(@PathVariable Integer id) {
+    public final ResponseEntity<Integer> deletePlayerById(@PathVariable Integer id) {
 
         playerService.deletePlayer(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

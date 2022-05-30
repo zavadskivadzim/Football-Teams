@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class TeamController {
@@ -20,15 +20,17 @@ public class TeamController {
     }
 
     @GetMapping(value = "/teams")
-    public final Collection<Team> getAllTeams() {
+    public final ResponseEntity<List<Team>> getAllTeams() {
 
-        return teamService.getAllTeams();
+        List<Team> teams = teamService.getAllTeams();
+        return new ResponseEntity<>(teams, HttpStatus.OK);
     }
 
     @GetMapping(value = "/teams/{id}")
-    public final Team findTeamById(@PathVariable Integer id) {
+    public final ResponseEntity<Team> findTeamById(@PathVariable Integer id) {
 
-        return teamService.findTeamById(id);
+        Team team = teamService.findTeamById(id);
+        return new ResponseEntity<>(team, HttpStatus.OK);
     }
 
     @PostMapping(value = "/teams")
@@ -47,9 +49,10 @@ public class TeamController {
     }
 
     @DeleteMapping(value = "/teams/{id}")
-    public final void deleteTeamById(@PathVariable Integer id) {
+    public final ResponseEntity<Integer> deleteTeamById(@PathVariable Integer id) {
 
         teamService.deleteTeam(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/teams/count")
