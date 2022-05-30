@@ -84,9 +84,11 @@ public class PlayerController {
      */
     @PostMapping(value = "/player")
     public String addPlayer(@Valid Player player,
-                            BindingResult result) {
+                            BindingResult result,
+                            Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("teams", teamService.getAllTeams());
             return "player";
         } else {
             this.playerService.createPlayer(player);
@@ -102,9 +104,11 @@ public class PlayerController {
      */
     @PostMapping(value = "/player/{id}")
     public String updatePlayer(@Valid Player player,
-                               BindingResult result) {
+                               BindingResult result,
+                               Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("teams", teamService.getAllTeams());
             return "player";
         } else {
             this.playerService.updatePlayer(player);
