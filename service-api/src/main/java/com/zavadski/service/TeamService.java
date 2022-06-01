@@ -18,7 +18,7 @@ public interface TeamService {
 
     Long count();
 
-    boolean isTeamWithPlayers(Integer teamId);
+    boolean checkOnTeamWithPlayers(Integer teamId);
 
     boolean checkTeamOnUnique(String teamName);
 

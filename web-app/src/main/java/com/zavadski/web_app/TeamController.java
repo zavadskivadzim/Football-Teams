@@ -143,8 +143,8 @@ public class TeamController {
 
         logger.debug("delete({},{})", id, model);
 
-        teamService.isTeamWithPlayers(id);
-        if (teamService.isTeamWithPlayers(id)) {
+        teamService.checkOnTeamWithPlayers(id);
+        if (teamService.checkOnTeamWithPlayers(id)) {
             redirectAttributes.addAttribute("errorMessage",
                     "You can't delete this team, because it has players");
             return "redirect:/errors";

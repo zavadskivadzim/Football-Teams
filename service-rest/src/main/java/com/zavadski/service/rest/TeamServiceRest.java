@@ -76,7 +76,7 @@ public class TeamServiceRest implements TeamService {
     }
 
     @Override
-    public boolean isTeamWithPlayers(Integer teamId) {
+    public boolean checkOnTeamWithPlayers(Integer teamId) {
         return restTemplate.getForObject(url + "/check/" + teamId, Boolean.class);
     }
 

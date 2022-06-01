@@ -63,7 +63,7 @@ public class TeamController {
 
     @GetMapping("/teams/check/{id}")
     public boolean checkTeamWithPlayers(@PathVariable Integer id) {
-        return teamService.isTeamWithPlayers(id);
+        return teamService.checkOnTeamWithPlayers(id);
     }
 
     @GetMapping("/teams/unique/{teamName}")

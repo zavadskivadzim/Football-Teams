@@ -49,7 +49,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public boolean isTeamWithPlayers(Integer teamId) {
+    public boolean checkOnTeamWithPlayers(Integer teamId) {
         return teamDao.isTeamWithPlayers(teamId);
     }
 
