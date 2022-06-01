@@ -9,17 +9,17 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-public class TeamDtoServiceRest implements TeamWithPlayerDtoService {
+public class TeamWithPlayerDtoServiceRest implements TeamWithPlayerDtoService {
 
     private String url;
 
     private RestTemplate restTemplate;
 
-    public TeamDtoServiceRest() {
+    public TeamWithPlayerDtoServiceRest() {
 
     }
 
-    public TeamDtoServiceRest(String url, RestTemplate restTemplate) {
+    public TeamWithPlayerDtoServiceRest(String url, RestTemplate restTemplate) {
         this();
         this.url = url;
         this.restTemplate = restTemplate;

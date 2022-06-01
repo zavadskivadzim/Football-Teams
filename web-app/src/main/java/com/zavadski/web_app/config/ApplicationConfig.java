@@ -6,7 +6,7 @@ import com.zavadski.service.TeamService;
 import com.zavadski.service.TeamWithPlayerDtoService;
 import com.zavadski.service.rest.PlayerDtoServiceRest;
 import com.zavadski.service.rest.PlayerServiceRest;
-import com.zavadski.service.rest.TeamDtoServiceRest;
+import com.zavadski.service.rest.TeamWithPlayerDtoServiceRest;
 import com.zavadski.service.rest.TeamServiceRest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +36,7 @@ public class ApplicationConfig {
     @Bean
     TeamWithPlayerDtoService teamDtoService() {
         String url = String.format("%s://%s:%d/team_with_players", protocol, host, port);
-        return new TeamDtoServiceRest(url, restTemplate());
+        return new TeamWithPlayerDtoServiceRest(url, restTemplate());
     }
 
     @Bean

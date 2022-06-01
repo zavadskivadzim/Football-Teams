@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
+@PropertySource("sql_query.properties")
 public class PlayerFilterDtoDaoImpl implements PlayerFilterDtoDao {
 
     private final Logger logger = LogManager.getLogger(PlayerFilterDtoDaoImpl.class);

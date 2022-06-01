@@ -4,7 +4,6 @@ import com.zavadski.dao.api.PlayerFilterDtoDao;
 import com.zavadski.model.dto.PlayerDto;
 import com.zavadski.service.PlayerFilterDtoService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
