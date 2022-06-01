@@ -20,6 +20,6 @@ public interface TeamService {
 
     boolean isTeamWithPlayers(Integer teamId);
 
-    boolean isTeamUnique(String teamName);
+    boolean checkTeamOnUnique(String teamName);
 
 }

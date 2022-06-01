@@ -68,7 +68,7 @@ public class TeamController {
 
     @GetMapping("/teams/unique/{teamName}")
     public boolean checkTeamOnUnique(@PathVariable String teamName) {
-        return teamService.isTeamUnique(teamName);
+        return teamService.checkTeamOnUnique(teamName);
     }
 
 }

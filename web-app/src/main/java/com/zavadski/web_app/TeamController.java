@@ -89,7 +89,7 @@ public class TeamController {
         if (result.hasErrors()) {
             return "team";
         } else {
-            if (teamService.isTeamUnique(team.getTeamName())) {
+            if (teamService.checkTeamOnUnique(team.getTeamName())) {
                 teamService.createTeam(team);
                 return "redirect:/teams";
             } else {
@@ -118,7 +118,7 @@ public class TeamController {
         } else {
             Team newTeam = new Team();
             newTeam.setTeamName(team.getTeamName());
-            if (this.teamService.isTeamUnique(newTeam.getTeamName())
+            if (this.teamService.checkTeamOnUnique(newTeam.getTeamName())
                     || (Objects.equals(this.teamService.findTeamById(team.getTeamId()).getTeamName(), newTeam.getTeamName()))) {
                 this.teamService.updateTeam(team);
                 return "redirect:/teams";
