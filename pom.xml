@@ -25,6 +25,7 @@
         <module>service-api</module>
         <module>service-rest</module>
         <module>web-app</module>
+        <module>mongo-db</module>
     </modules>
 
     <dependencyManagement>
@@ -64,6 +65,12 @@
                 <artifactId>web-app</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.zavadski</groupId>
+                <artifactId>mongo-db</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -84,6 +91,12 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-mongodb</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
 
