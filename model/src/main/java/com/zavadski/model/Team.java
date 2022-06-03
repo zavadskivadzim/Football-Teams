@@ -9,8 +9,7 @@ import javax.validation.constraints.Size;
 import static com.zavadski.model.constants.Constants.TEAM_NAME_SIZE;
 
 @Data
-@RequiredArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "team")
 public class Team {
@@ -27,5 +26,9 @@ public class Team {
 
     public Team(Integer teamId) {
         this.teamId = teamId;
+    }
+
+    public Team(String teamName) {
+        this.teamName = teamName;
     }
 }

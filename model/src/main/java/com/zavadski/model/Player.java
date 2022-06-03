@@ -2,6 +2,7 @@ package com.zavadski.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 import static com.zavadski.model.constants.Constants.PLAYER_NAME_SIZE;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "player")
 public class Player {
@@ -40,4 +42,10 @@ public class Player {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    public Player(String firstName, String surname, LocalDate birthday, Team team) {
+        this.firstName = firstName;
+        this.surname = surname;
+        this.birthday = birthday;
+        this.team = team;
+    }
 }

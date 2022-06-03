@@ -42,19 +42,19 @@
          class="py-1 mb-3 navbar navbar-light bg-primary text-dark">
         <div class="container-fluid">
              <span class="navbar-brand text-uppercase me-auto"
-                   th:text="${isNew} ? 'New player' : 'Edit player'">Edit player</span>
+                   th:text="${isNew} ? 'New playerMongo' : 'Edit playerMongo'">Edit playerMongo</span>
         </div>
     </nav>
 </header>
 
-<section id="player">
+<section id="playerMongo">
     <div class="container-fluid">
         <div class="row">
             <div class="col">
                 <div class="card">
                     <div class="card-body">
                         <form id="playerForm"
-                              th:object="${player}"
+                              th:object="${playerMongo}"
                               action="players.html"
                               th:action="@{${#httpServletRequest.servletPath}}"
                               th:method="@{post}">
@@ -125,7 +125,7 @@
                                    th:href="@{/players}"
                                    th:onclick="@{document.forms['playerForm'].submit(); return false;}"
                                    class="btn btn-primary"
-                                   title="Save player">Save</a>
+                                   title="Save playerMongo">Save</a>
                             </div>
 
                         </form>

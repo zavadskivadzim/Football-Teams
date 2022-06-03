@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS player;
+DROP TABLE IF EXISTS playerMongo;
 DROP TABLE IF EXISTS team;
 
 create TABLE team(
@@ -6,7 +6,7 @@ team_id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 team_name VARCHAR(30) NOT NULL UNIQUE
 );
 
-create TABLE player (
+create TABLE playerMongo (
 player_id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 first_name varchar(50) NOT NULL,
 surname varchar(50) NOT NULL,
@@ -25,7 +25,7 @@ insert into PLAYER (first_name, surname, birthday, team_id) values ('Mohamed', '
 insert into PLAYER (first_name, surname, birthday, team_id) values ('Alexandre', 'Lacazette', '1991-05-28', 2);
 insert into PLAYER (first_name, surname, birthday, team_id) values ('Bukayo', 'Saka', '2001-09-05', 2);
 
-select * from player
+select * from playerMongo
 
 SELECT t.team_id, t.team_name, count(p.team_id)
 FROM Team t

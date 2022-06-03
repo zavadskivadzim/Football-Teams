@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS player;
+DROP TABLE IF EXISTS playerMongo;
 DROP TABLE IF EXISTS team;
 
 CREATE TABLE team(
@@ -7,7 +7,7 @@ team_name VARCHAR(30) NOT NULL UNIQUE,
 PRIMARY KEY (team_id)
 );
 
-CREATE TABLE player(
+CREATE TABLE playerMongo(
     player_id int NOT NULL auto_increment,
     first_name varchar(50) NOT NULL,
     surname varchar(50) NOT NULL,

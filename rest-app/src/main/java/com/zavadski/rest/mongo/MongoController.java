@@ -1,4 +1,4 @@
-package com.zavadski.rest;
+package com.zavadski.rest.mongo;
 
 import com.zavadski.mongo.CreateMongoCollection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class MongoController {
         this.createMongoCollection = createMongoCollection;
     }
 
-    @GetMapping(value = "/write_to_mongo")
+    @GetMapping(value = "/write_to_mongo1")
     public final void writeToMongo() {
 
         createMongoCollection.createCollection();
