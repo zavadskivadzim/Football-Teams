@@ -10,12 +10,12 @@ import java.time.temporal.ChronoUnit;
 public class PlayerMongo {
 
     private String firstName;
-    private Long age;
+    private Integer age;
 
     public static PlayerMongo fromPlayer(Player player) {
         PlayerMongo playerMongo = new PlayerMongo();
-        playerMongo.setFirstName(player.getFirstName() + player.getSurname());
-        playerMongo.setAge(player.getBirthday().until(LocalDate.now(), ChronoUnit.YEARS));
+        playerMongo.setFirstName(player.getFirstName() + " " + player.getSurname());
+        playerMongo.setAge((int) player.getBirthday().until(LocalDate.now(), ChronoUnit.YEARS));
         return playerMongo;
     }
 }

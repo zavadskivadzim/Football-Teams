@@ -1,41 +1,64 @@
 package com.zavadski.mongo;
 
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.InsertManyResult;
+import com.zavadski.mongo.document.PlayersByAge;
+import com.zavadski.mongo.model.PlayerMongo;
+import com.zavadski.mongo.repository.PlayersByAgeRepository;
 import com.zavadski.service.PlayerService;
+import com.zavadski.service.TeamService;
 import org.bson.Document;
+import org.bson.codecs.configuration.CodecRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CreateMongoCollection {
 
     private final PlayerService playerService;
+    private final TeamService teamService;
+    private PlayersByAgeRepository repository;
 
     @Autowired
-    public CreateMongoCollection(PlayerService playerService) {
+    public CreateMongoCollection(PlayerService playerService, TeamService teamService, PlayersByAgeRepository repository) {
         this.playerService = playerService;
+        this.teamService = teamService;
+        this.repository = repository;
     }
 
     public void createCollection() {
         String uri = "mongodb://localhost:27017";
         MongoClient mongoClient = MongoClients.create(uri);
-        MongoDatabase db = mongoClient.getDatabase("Football-Teams");
+
+        CodecRegistry pojoCodecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
+                CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+
+        MongoDatabase db = mongoClient.getDatabase("Football-Teams").withCodecRegistry(pojoCodecRegistry);
         db.getCollection("football-teams").drop();
         MongoCollection<Document> coll = db.getCollection("football-teams");
 
-        List<Document> documents = new ArrayList<>();
-        Document doc1 = new Document("date", LocalDate.now().format(DateTimeFormatter.ofPattern("MMM d, uuuu")))
-                .append("player", playerService.getAllPlayers().get(0).getFirstName());
-        documents.add(doc1);
-        InsertManyResult result = coll.insertMany(documents);
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("MMM d, uuuu"));
+
+        PlayersByAge playersByAge = new PlayersByAge(
+                currentDate,
+                "under 18",
+                teamService.findTeamById(1).getTeamName(),
+                (playerService.getAllPlayers().stream()
+                        .map(PlayerMongo::fromPlayer)
+                        .filter(playerMongo -> playerMongo.getAge() < 30)
+                        .collect(Collectors.toList()))
+        );
+
+        repository.insert(playersByAge);
+
     }
 }

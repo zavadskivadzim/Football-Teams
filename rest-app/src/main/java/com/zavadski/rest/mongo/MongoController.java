@@ -14,7 +14,7 @@ public class MongoController {
         this.createMongoCollection = createMongoCollection;
     }
 
-    @GetMapping(value = "/write_to_mongo1")
+    @GetMapping(value = "/write_to_mongo")
     public final void writeToMongo() {
 
         createMongoCollection.createCollection();
