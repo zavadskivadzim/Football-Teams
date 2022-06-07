@@ -1,6 +1,6 @@
 package com.zavadski.mongo.document;
 
-import com.zavadski.mongo.model.TeamMongo;
+import com.zavadski.mongo.model.PlayersByAgeAndTeam;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,17 +9,15 @@ import java.util.List;
 
 @Data
 @Document(collection = "football-teams")
-public class PlayersByAge {
+public class PlayersDocument {
 
     @Id
     private String id;
     private String dateOfCreating;
-    private String age;
-    private List<TeamMongo> teams;
+    private List<PlayersByAgeAndTeam> playersByAgeAndTeams;
 
-    public PlayersByAge(String dateOfCreating, String age, List<TeamMongo> teams) {
+    public PlayersDocument(String dateOfCreating, List<PlayersByAgeAndTeam> playersByAgeAndTeams) {
         this.dateOfCreating = dateOfCreating;
-        this.age = age;
-        this.teams = teams;
+        this.playersByAgeAndTeams = playersByAgeAndTeams;
     }
 }
