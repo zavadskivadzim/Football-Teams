@@ -7,6 +7,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.zavadski.mongo.document.PlayersByAge;
 import com.zavadski.mongo.model.PlayerMongo;
+import com.zavadski.mongo.model.TeamMongo;
 import com.zavadski.mongo.repository.PlayersByAgeRepository;
 import com.zavadski.service.PlayerService;
 import com.zavadski.service.TeamService;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -51,11 +53,18 @@ public class CreateMongoCollection {
         PlayersByAge playersByAge = new PlayersByAge(
                 currentDate,
                 "under 18",
-                teamService.findTeamById(1).getTeamName(),
-                (playerService.getAllPlayers().stream()
-                        .map(PlayerMongo::fromPlayer)
-                        .filter(playerMongo -> playerMongo.getAge() < 30)
-                        .collect(Collectors.toList()))
+                (teamService.getAllTeams().stream()
+                        .map(TeamMongo::fromTeam)
+                        .collect(Collectors.toList())
+                        .stream().peek(teamMongo -> teamMongo.setPlayers(playerService.getAllPlayers().stream()
+                                .filter(playerMongo -> Objects.equals(playerMongo.getTeam().getTeamName(), teamMongo.getTeamName()))
+                                .map(PlayerMongo::fromPlayer)
+                                .filter(playerMongo -> playerMongo.getAge() < 18)
+                                .collect(Collectors.toList()))
+                        )
+                        .collect(Collectors.toList())
+                        .stream().filter(teamMongo -> !teamMongo.getPlayers().isEmpty()).collect(Collectors.toList())
+                )
         );
 
         repository.insert(playersByAge);
