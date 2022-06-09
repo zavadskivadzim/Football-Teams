@@ -5,13 +5,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.zavadski.mongo.service.PlayersByInterval;
 import com.zavadski.mongo.document.PlayersDocument;
-import com.zavadski.mongo.model.PlayersByAgeAndTeam;
-import com.zavadski.mongo.model.PlayerMongo;
-import com.zavadski.mongo.model.TeamMongo;
 import com.zavadski.mongo.repository.PlayersByAgeRepository;
-import com.zavadski.service.PlayerService;
-import com.zavadski.service.TeamService;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -22,20 +18,16 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Component
 public class CreateMongoCollection {
 
-    private final PlayerService playerService;
-    private final TeamService teamService;
+    private final PlayersByInterval playersByInterval;
     private final PlayersByAgeRepository repository;
 
     @Autowired
-    public CreateMongoCollection(PlayerService playerService, TeamService teamService, PlayersByAgeRepository repository) {
-        this.playerService = playerService;
-        this.teamService = teamService;
+    public CreateMongoCollection(PlayersByInterval playersByInterval, PlayersByAgeRepository repository) {
+        this.playersByInterval = playersByInterval;
         this.repository = repository;
     }
 
@@ -54,59 +46,11 @@ public class CreateMongoCollection {
 
         PlayersDocument playersDocument = new PlayersDocument(
                 currentDate,
-                (List.of(new PlayersByAgeAndTeam("under 18",
-                        (teamService.getAllTeams().stream()
-                                .map(TeamMongo::fromTeam)
-                                .collect(Collectors.toList())
-                                .stream().peek(teamMongo -> teamMongo.setPlayers(playerService.getAllPlayers().stream()
-                                        .filter(playerMongo -> Objects.equals(playerMongo.getTeam().getTeamName(), teamMongo.getTeamName()))
-                                        .map(PlayerMongo::fromPlayer)
-                                        .filter(playerMongo -> playerMongo.getAge() < 18)
-                                        .collect(Collectors.toList()))
-                                )
-                                .collect(Collectors.toList())
-                                .stream().filter(teamMongo -> !teamMongo.getPlayers().isEmpty()).collect(Collectors.toList())
-                        )),
-                new PlayersByAgeAndTeam("from 18 to 23",
-                        (teamService.getAllTeams().stream()
-                                .map(TeamMongo::fromTeam)
-                                .collect(Collectors.toList())
-                                .stream().peek(teamMongo -> teamMongo.setPlayers(playerService.getAllPlayers().stream()
-                                        .filter(playerMongo -> Objects.equals(playerMongo.getTeam().getTeamName(), teamMongo.getTeamName()))
-                                        .map(PlayerMongo::fromPlayer)
-                                        .filter(playerMongo -> playerMongo.getAge() < 23 && playerMongo.getAge() >= 18)
-                                        .collect(Collectors.toList()))
-                                )
-                                .collect(Collectors.toList())
-                                .stream().filter(teamMongo -> !teamMongo.getPlayers().isEmpty()).collect(Collectors.toList())
-                        )),
-                new PlayersByAgeAndTeam("from 23 to 28",
-                        (teamService.getAllTeams().stream()
-                                .map(TeamMongo::fromTeam)
-                                .collect(Collectors.toList())
-                                .stream().peek(teamMongo -> teamMongo.setPlayers(playerService.getAllPlayers().stream()
-                                        .filter(playerMongo -> Objects.equals(playerMongo.getTeam().getTeamName(), teamMongo.getTeamName()))
-                                        .map(PlayerMongo::fromPlayer)
-                                        .filter(playerMongo -> playerMongo.getAge() < 28 && playerMongo.getAge() >= 23)
-                                        .collect(Collectors.toList()))
-                                )
-                                .collect(Collectors.toList())
-                                .stream().filter(teamMongo -> !teamMongo.getPlayers().isEmpty()).collect(Collectors.toList())
-                        )),
-                new PlayersByAgeAndTeam("over 28",
-                        (teamService.getAllTeams().stream()
-                                .map(TeamMongo::fromTeam)
-                                .collect(Collectors.toList())
-                                .stream().peek(teamMongo -> teamMongo.setPlayers(playerService.getAllPlayers().stream()
-                                        .filter(playerMongo -> Objects.equals(playerMongo.getTeam().getTeamName(), teamMongo.getTeamName()))
-                                        .map(PlayerMongo::fromPlayer)
-                                        .filter(playerMongo -> playerMongo.getAge() >= 28)
-                                        .collect(Collectors.toList()))
-                                )
-                                .collect(Collectors.toList())
-                                .stream().filter(teamMongo -> !teamMongo.getPlayers().isEmpty()).collect(Collectors.toList())
-                        ))
-        )));
+                (List.of(playersByInterval.getPlayersByTimeInterval("under 18",0,18),
+                        playersByInterval.getPlayersByTimeInterval("from 18 to 23", 18,23),
+                        playersByInterval.getPlayersByTimeInterval("from 23 to 28", 23,28),
+                        playersByInterval.getPlayersByTimeInterval("over 28",28, 150)
+                )));
 
         repository.insert(playersDocument);
 
