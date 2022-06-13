@@ -8,14 +8,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.util.List;
 
-@Component
+@Repository
 @PropertySource("sql_query.properties")
 public class PlayerFilterDtoDaoImpl implements PlayerFilterDtoDao {
 
