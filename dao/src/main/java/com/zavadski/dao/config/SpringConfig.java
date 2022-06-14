@@ -9,7 +9,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import javax.sql.DataSource;
 import java.util.Objects;
 
-@PropertySource("congig.properties")
+@PropertySource("config.properties")
 public class SpringConfig {
 
     @Value("${spring.profiles.active}")

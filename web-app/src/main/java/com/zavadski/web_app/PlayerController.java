@@ -21,7 +21,6 @@ public class PlayerController {
 
     private static final Logger logger = LoggerFactory.getLogger(PlayerController.class);
 
-
     private final PlayerService playerService;
     private final TeamService teamService;
     private final PlayerFilterDtoService playerDtoService;
@@ -122,7 +121,7 @@ public class PlayerController {
      * @return view name
      */
     @GetMapping(value = "/player/{id}/delete")
-    public final String deletePlayerById(@PathVariable Integer id, Model model) {
+    public final String deletePlayerById(@PathVariable Integer id) {
 
         playerService.deletePlayer(id);
         return "redirect:/players";
