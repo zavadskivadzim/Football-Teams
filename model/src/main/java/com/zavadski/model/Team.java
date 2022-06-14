@@ -21,7 +21,7 @@ public class Team {
     private Integer teamId;
 
     @Column(name = "team_name")
-    @NotBlank(message = "Team name can't be empty")
+    @NotBlank(message = "Team name can not be empty")
     @Size(max = TEAM_NAME_SIZE, message = "Team name must be less then {max} characters long")
     private String teamName;
 

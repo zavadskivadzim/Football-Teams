@@ -47,7 +47,7 @@ public class TeamDaoImpl implements TeamDao {
 
         logger.info("Create team {}", team);
 
-        if (!isTeamUnique(team.getTeamName())) {
+        if (!checkTeamOnUnique(team.getTeamName())) {
             logger.warn("Team with the same name {} already exists.", team.getTeamName());
             throw new UnacceptableName("Team with the same name already exists in DB.");
         }
@@ -100,7 +100,7 @@ public class TeamDaoImpl implements TeamDao {
     }
 
     @Override
-    public boolean isTeamUnique(String teamName) {
+    public boolean checkTeamOnUnique(String teamName) {
 
         logger.debug("Check TeamName: {} on unique", teamName);
 
