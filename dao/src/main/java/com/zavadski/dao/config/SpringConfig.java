@@ -9,6 +9,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import javax.sql.DataSource;
 import java.util.Objects;
 
+@ComponentScan
 @PropertySource("config.properties")
 public class SpringConfig {
 
